@@ -1,19 +1,34 @@
 {
+    "version": "0.2.0",
     "configurations": [
         {
-            "name": "Docker: Python - Flask",
+            "name": "Python Debugger: Conda dezoom",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "python": "/home/brynjar/anaconda3/envs/dezoom/bin/python",
+            "args": [],
+            "cwd": "${fileDirname}"
+        },
+        {
+            "name": "Docker: NY Taxi Ingestion Pipeline",
             "type": "docker",
             "request": "launch",
-            "preLaunchTask": "docker-run: debug",
+            "preLaunchTask": "docker-run: debug ny-taxi",
             "python": {
                 "pathMappings": [
                     {
-                        "localRoot": "${workspaceFolder}",
+                        "localRoot": "${fileDirname}",
                         "remoteRoot": "/app"
                     }
                 ],
-                "projectType": "flask"
-            }
+                "args": [
+                    "--host=pg-database",
+                    "--url=http://172.19.71.158:8000/yellow_tripdata_2021-01.parquet"  // Remember to host the file with a simple HTTP server and modify the IP address accordingly
+                ],
+                "projectType": "general"
+            },
         }
     ]
 }
